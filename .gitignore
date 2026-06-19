@@ -1,0 +1,45 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Env / secrets
+.env
+.env.*
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node / build artifacts (in case tooling is added later)
+node_modules/
+dist/
+build/
+
+# WordPress runtime / exports
+wp-content/uploads/cache/
+wp-content/cache/
+*.sql
+*.sql.gz
+
+# Source material (binary, distributed separately)
+*.pdf
+*.psd
+*.fig
+*.sketch
+*.ai
+
+# Archives
+*.zip
+*.tar.gz
+*.7z
