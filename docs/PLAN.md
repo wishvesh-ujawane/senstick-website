@@ -1,13 +1,14 @@
 # SENSESTICK Website — Build Plan (Figma-Reconciled)
 
-> **Status**: Pre-implementation. Figma reconciliation complete. Phase 0 (asset hygiene) done.
-> **Authority**: High-fidelity Figma exports (`figma/*.png`, 19 frames) are the source of truth for layout, components, and tokens. Requirements brief (`docs/project-brief.pdf`) remains authoritative for scope. Datasheet (`docs/TS-Series-datasheet.pdf`) authoritative for product specifications. Low-fi wireframes (`figma/website-wireframes.pdf`) retained for historical reference only.
+> **Status**: Phase 0 + Phase 2 scaffolding complete. Child theme + CPTs + taxonomies + 6 ACF field groups committed and pushed to [github.com/wishvesh-ujawane/senstick-website](https://github.com/wishvesh-ujawane/senstick-website). Currently unblocked: Hostinger provisioning + theme upload (see [docs/SETUP.md](SETUP.md)).
+> **Hosting**: Direct-to-Hostinger (no LocalWP). The repo is the source of truth for theme code; Hostinger File Manager / SFTP is the deploy target.
+> **Authority**: High-fidelity Figma exports (`figma/*.png`, 20 frames) are the source of truth for layout, components, and tokens. Requirements brief (`docs/project-brief.pdf`) remains authoritative for scope. Datasheet (`docs/TS-Series-datasheet.pdf`) authoritative for product specifications. Low-fi wireframes (`figma/website-wireframes.pdf`) retained for historical reference only.
 
 ---
 
 ## TL;DR
 
-Build the SENSESTICK product site as a self-contained freelance project. Stack: **WordPress + Hello Elementor child + Elementor Pro + ACF Free + CPT UI + scheduling embed**. Figma defines **8 user-visible page types** delivered via **11 effective Elementor templates** and three CPTs (`Product Family`, `Resource`, `Download`). Brand tokens: navy `#000064` + yellow `#FFFF00` accent-on-navy only; **buttons are rounded ~8–10 px** (visually pill when wide, rounded-square when narrow). **Home page Use Cases grid is 5 cards** (not 6), **Industries is its own page** with 6 cards, **Getting Started is a hub landing**, **Getting Started dropdown lists Microsoft Excel (external link, TBD by client) + Google Sheets + LibreOffice Calc + ONLYOFFICE Spreadsheet**, **Book a Demo uses an embedded scheduler** (Calendly recommended).
+Build the SENSESTICK product site as a self-contained freelance project hosted on **Hostinger**. Stack: **WordPress + Hello Elementor + `sensestick-child` (scaffolded, in this repo) + Elementor Pro + ACF Free + CPT UI + Calendly embed**. Figma defines **8 user-visible page types** delivered via **11 effective Elementor templates** and three CPTs (`Product Family`, `Resource`, `Download`) that are already registered in the child theme. Brand tokens: navy `#000064` + yellow `#FFFF00` accent-on-navy only; **buttons are rounded ~8–10 px** (visually pill when wide, rounded-square when narrow). **Home page Use Cases grid is 5 cards** (not 6), **Industries is its own page** with 6 cards, **Getting Started is a hub landing**, **Getting Started dropdown lists Microsoft Excel (external link, TBD by client) + Google Sheets + LibreOffice Calc + ONLYOFFICE Spreadsheet**, **Book a Demo uses an embedded scheduler** (Calendly recommended).
 
 ---
 
@@ -114,19 +115,37 @@ Single sans-serif family — Inter or Source Sans 3. Approximate scale (verify o
 2. ✅ Source PDFs in `docs/` and `figma/` excluded via `.gitignore`.
 3. ✅ Figma PNGs moved into `figma/` with standardized hyphen-spaced names; `.gitignore` extended to exclude `figma/*.{png,jpg,jpeg,webp}` (large, local-only).
 4. ✅ This plan saved at `docs/PLAN.md` (replaces the wireframe-driven v1; git history preserves the original).
+5. ✅ Repo pushed to [github.com/wishvesh-ujawane/senstick-website](https://github.com/wishvesh-ujawane/senstick-website) under `main`.
 
-### Phase 1 — WordPress environment
+### Phase 1 — Hostinger provisioning  *(user-side, in progress)*
 
-5. Install LocalWP. Site name `senstick.local`. Latest WP, PHP 8.1+, timezone, permalinks → post-name, disable comments site-wide, media sizes (thumb 300, medium 600, large 1200), enable WebP via image-optimization plugin later.
-6. Install **Hello Elementor** + child theme. Configure site identity, favicon placeholder, container width 1240 px.
-7. Install plugin stack listed above. Keep additions strictly justified.
+*Direct-to-Hostinger — no LocalWP. Step-by-step instructions live in [docs/SETUP.md](SETUP.md).*
 
-### Phase 2 — Globals, IA, CPTs
+6. Buy Hostinger plan (Business recommended) + connect domain (`sensestick.com` or chosen domain) + wait for free SSL active.
+7. Install WordPress via hPanel Auto Installer. Pick a non-`admin` username, strong password.
+8. WP hygiene: permalinks → Post name, disable comments, set HTTPS site URLs, hide from search engines until launch.
+9. Install Hello Elementor (parent). Do NOT activate yet — upload the child first.
+10. Upload `sensestick-child` zip via Appearance → Themes → Upload (or sync via SFTP). Activate.
+11. Install plugin stack: Elementor + Pro, ACF Free, WPForms Lite or Fluent Forms, Rank Math, WPCode Lite, UpdraftPlus, ShortPixel/Smush. Keep Hostinger's built-in LiteSpeed Cache — do NOT add a 2nd cache plugin.
 
-8. Apply global design tokens in Elementor Site Settings (colors, typography, buttons, container, breakpoints) per the tables above.
-9. **Static pages** to create: Home, Products (optional landing), About, Contact Us, Book a Demo, Industries, Downloads, Getting Started.
-10. **CPTs**
-    - **`Product Family`** (slug `products`). ACF group:
+### Phase 2 — Globals, IA, CPTs  *(child-theme scaffolding complete)*
+
+The child theme already ships CPTs, taxonomies (with seeded terms), image sizes, nav menu locations, brand-token CSS variables, and 6 ACF field groups. Activating the theme + ACF Free populates the data model automatically. Remaining work is in WP admin.
+
+12. **Already in code** ✅: `product_family`, `resource`, `download` CPTs registered in [wordpress/sensestick-child/inc/cpts.php](../wordpress/sensestick-child/inc/cpts.php).
+13. **Already in code** ✅: `resource_type`, `download_category`, `download_type` taxonomies + canonical terms seeded in [wordpress/sensestick-child/inc/taxonomies.php](../wordpress/sensestick-child/inc/taxonomies.php).
+14. **Already in code** ✅: 6 ACF JSON field groups in [wordpress/sensestick-child/acf-json/](../wordpress/sensestick-child/acf-json/) covering Product Family, Resource (10-block flexible content), Spreadsheet Integration variant, Download, Industries page, Downloads page.
+15. **Already in code** ✅: Brand tokens as CSS custom properties in [wordpress/sensestick-child/style.css](../wordpress/sensestick-child/style.css).
+16. **In WP admin (manual)**: After theme activation, go to ACF → Field Groups → Sync (yellow banner) to bulk-sync the 6 groups.
+17. **In Elementor Site Settings (manual)**: mirror the brand tokens (Global Colors, Global Fonts, Buttons radius 8 px, Container 1240 px). Elementor does not read the CSS variables automatically.
+18. **Static pages** to create in WP admin: Home, Products (optional landing), About, Contact Us, Book a Demo, Industries, Downloads, Getting Started.
+19. **Menu construction** — primary menu matches the Figma nav exactly. Header + footer built via Elementor Pro Theme Builder. The Microsoft Excel item under Getting Started is a **Custom Link** (external URL placeholder); the other three integration items (Google Sheets, LibreOffice Calc, ONLYOFFICE Spreadsheet) are linked to their internal Spreadsheet Integration `Resource` posts.
+
+#### Reference — CPT and ACF schema (now in code)
+
+Retained below for design / content reviewers. Actual field keys and types live in the JSON files referenced above.
+
+- **`Product Family`** (slug `products`). ACF group:
       - `overview` (wysiwyg)
       - `feature_icons[]` — repeater `{ icon, label }` (e.g., High Accuracy ±0.1°C / Real-Time Logging / USB Powered / Rugged & Reliable).
       - `feature_highlights[]` — repeater `{ icon, title, body }` (5 cards: Wide Temperature Range / High Resolution / Fast Sampling / Plug & Play / Cross Platform).
@@ -138,8 +157,7 @@ Single sans-serif family — Inter or Source Sans 3. Approximate scale (verify o
     - **`Resource`** with taxonomy `Resource Type` — terms: **Tutorial, Use Case, User Guide, Spreadsheet Integration, Installation Guide**. ACF on single: hero badge text, subtitle, hero product image. Body via ACF Flexible Content (see Template 9). Spreadsheet Integration uses a dedicated single template (Template 11). Menu surfaces Tutorials / Use Case / Industries / Downloads under Resources; User Guides reachable via Product Family buttons + Footer + Downloads page.
     - **`Download`** with ACF: `file` (PDF/zip upload), `category` taxonomy (Temperature Family / Microsoft Excel / Google Sheets / LibreOffice Calc / ONLYOFFICE Spreadsheet / Tutorials / Use Cases), `type` taxonomy (Datasheet / Brochure / Software / User Guide PDF / Installation Guide PDF / Certificate), `associated_product` relationship, `version`, `date`. `file_size` auto-resolved from upload.
     - **Spreadsheet Integration posts to seed**: Google Sheets, LibreOffice Calc, ONLYOFFICE Spreadsheet (three internal pages). Microsoft Excel is an external menu link only — no internal post or page.
-11. **Industries page** — static page + ACF repeater `industries[] { icon, title, body, learn_more_link, featured_on_home (bool), featured_on_about (bool) }`. About reuses 5 entries; Home reuses 5.
-12. **Menu construction** — primary menu matches the Figma nav exactly. Header + footer built via Elementor Pro Theme Builder. The Microsoft Excel item under Getting Started is a **Custom Link** (external URL placeholder); the other three integration items (Google Sheets, LibreOffice Calc, ONLYOFFICE Spreadsheet) are linked to their internal Spreadsheet Integration `Resource` posts.
+- **Industries page** — static page + ACF repeater `industries[] { icon, title, body, learn_more_link, featured_on_home (bool), featured_on_about (bool) }`. About reuses 5 entries; Home reuses 5.
 
 ### Phase 3 — Reusable global components
 
