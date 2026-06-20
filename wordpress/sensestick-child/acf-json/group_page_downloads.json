@@ -1,0 +1,91 @@
+{
+    "key": "group_page_downloads",
+    "title": "Page — Downloads",
+    "fields": [
+        {
+            "key": "field_dlp_intro",
+            "label": "Intro body",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3
+        },
+        {
+            "key": "field_dlp_hero_image",
+            "label": "Hero image (top right)",
+            "name": "hero_image",
+            "type": "image",
+            "return_format": "array"
+        },
+        {
+            "key": "field_dlp_groups",
+            "label": "Download groups",
+            "name": "download_groups",
+            "type": "flexible_content",
+            "button_label": "Add group",
+            "layouts": {
+                "layout_group_static": {
+                    "key": "layout_group_static",
+                    "name": "static_group",
+                    "label": "Static group (manual items)",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_dlp_g_title", "label": "Group title", "name": "title", "type": "text" },
+                        { "key": "field_dlp_g_icon", "label": "Group icon", "name": "icon", "type": "image", "return_format": "array" },
+                        { "key": "field_dlp_g_desc", "label": "Description", "name": "description", "type": "textarea", "rows": 2 },
+                        {
+                            "key": "field_dlp_g_items",
+                            "label": "Items",
+                            "name": "items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Add item",
+                            "sub_fields": [
+                                { "key": "field_dlp_g_item_label", "label": "Label", "name": "label", "type": "text" },
+                                { "key": "field_dlp_g_item_file", "label": "File", "name": "file", "type": "file", "return_format": "array" }
+                            ]
+                        }
+                    ]
+                },
+                "layout_group_dynamic": {
+                    "key": "layout_group_dynamic",
+                    "name": "dynamic_group",
+                    "label": "Dynamic group (pulled from Download CPT by category)",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_dlp_d_title", "label": "Group title", "name": "title", "type": "text" },
+                        { "key": "field_dlp_d_icon", "label": "Group icon", "name": "icon", "type": "image", "return_format": "array" },
+                        { "key": "field_dlp_d_desc", "label": "Description", "name": "description", "type": "textarea", "rows": 2 },
+                        {
+                            "key": "field_dlp_d_category",
+                            "label": "Download Category",
+                            "name": "category",
+                            "type": "taxonomy",
+                            "taxonomy": "download_category",
+                            "field_type": "select",
+                            "return_format": "object",
+                            "add_term": 0
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "location": [
+        [
+            { "param": "page_template", "operator": "==", "value": "page-downloads.php" }
+        ],
+        [
+            { "param": "page", "operator": "==", "value": "downloads" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Downloads page content. Mix static groups (manual file uploads) with dynamic groups (pulled from Download CPT by category) so product downloads and downloads-page entries share one source.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

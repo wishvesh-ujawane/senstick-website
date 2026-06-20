@@ -1,0 +1,56 @@
+{
+    "key": "group_download",
+    "title": "Download",
+    "fields": [
+        {
+            "key": "field_dl_file",
+            "label": "File",
+            "name": "file",
+            "type": "file",
+            "return_format": "array",
+            "required": 1,
+            "instructions": "PDF, ZIP, or installer. File size is auto-resolved on output."
+        },
+        {
+            "key": "field_dl_associated_product",
+            "label": "Associated Product",
+            "name": "associated_product",
+            "type": "relationship",
+            "post_type": ["product_family"],
+            "return_format": "object",
+            "min": 0,
+            "max": 1
+        },
+        {
+            "key": "field_dl_version",
+            "label": "Version",
+            "name": "version",
+            "type": "text",
+            "instructions": "e.g. v1.2.0"
+        },
+        {
+            "key": "field_dl_date",
+            "label": "Effective date",
+            "name": "effective_date",
+            "type": "date_picker",
+            "display_format": "Y-m-d",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            { "param": "post_type", "operator": "==", "value": "download" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Download CPT fields. Categorization via taxonomies download_category + download_type.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

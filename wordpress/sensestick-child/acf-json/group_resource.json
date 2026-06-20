@@ -1,0 +1,171 @@
+{
+    "key": "group_resource",
+    "title": "Resource Article",
+    "fields": [
+        {
+            "key": "field_res_hero_badge",
+            "label": "Hero badge",
+            "name": "hero_badge",
+            "type": "text",
+            "default_value": "SENSESTICK",
+            "instructions": "Yellow badge shown above the H1."
+        },
+        {
+            "key": "field_res_subtitle",
+            "label": "Subtitle",
+            "name": "subtitle",
+            "type": "text"
+        },
+        {
+            "key": "field_res_hero_image",
+            "label": "Hero product image",
+            "name": "hero_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "ss-hero-product"
+        },
+        {
+            "key": "field_res_article_body",
+            "label": "Article body",
+            "name": "article_body",
+            "type": "flexible_content",
+            "button_label": "Add block",
+            "layouts": {
+                "layout_text": {
+                    "key": "layout_text",
+                    "name": "text",
+                    "label": "Text",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_text_content", "label": "Content", "name": "content", "type": "wysiwyg", "tabs": "visual", "toolbar": "full" }
+                    ]
+                },
+                "layout_numbered_section": {
+                    "key": "layout_numbered_section",
+                    "name": "numbered_section",
+                    "label": "Numbered section (H2 + body)",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_sec_title", "label": "Title", "name": "title", "type": "text" },
+                        { "key": "field_res_sec_content", "label": "Content", "name": "content", "type": "wysiwyg", "tabs": "visual", "toolbar": "full" }
+                    ]
+                },
+                "layout_image_caption": {
+                    "key": "layout_image_caption",
+                    "name": "image_with_caption",
+                    "label": "Image + caption",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_img_image", "label": "Image", "name": "image", "type": "image", "return_format": "array" },
+                        { "key": "field_res_img_caption", "label": "Caption", "name": "caption", "type": "text" }
+                    ]
+                },
+                "layout_numbered_steps": {
+                    "key": "layout_numbered_steps",
+                    "name": "numbered_steps",
+                    "label": "Numbered steps (1-N)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_res_steps_items",
+                            "label": "Steps",
+                            "name": "items",
+                            "type": "repeater",
+                            "layout": "table",
+                            "button_label": "Add step",
+                            "sub_fields": [
+                                { "key": "field_res_step_text", "label": "Step", "name": "text", "type": "text" }
+                            ]
+                        }
+                    ]
+                },
+                "layout_callout": {
+                    "key": "layout_callout",
+                    "name": "callout",
+                    "label": "Callout",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_call_content", "label": "Content", "name": "content", "type": "wysiwyg", "tabs": "visual", "toolbar": "basic" },
+                        { "key": "field_res_call_variant", "label": "Variant", "name": "variant", "type": "select", "choices": { "info": "Info", "warning": "Warning", "success": "Success" }, "default_value": "info" }
+                    ]
+                },
+                "layout_configuration_table": {
+                    "key": "layout_configuration_table",
+                    "name": "configuration_table",
+                    "label": "Configuration table",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_cfg_title", "label": "Title (optional)", "name": "title", "type": "text" },
+                        {
+                            "key": "field_res_cfg_rows",
+                            "label": "Rows",
+                            "name": "rows",
+                            "type": "repeater",
+                            "layout": "table",
+                            "button_label": "Add row",
+                            "sub_fields": [
+                                { "key": "field_res_cfg_key", "label": "Key", "name": "key", "type": "text" },
+                                { "key": "field_res_cfg_val", "label": "Value", "name": "value", "type": "text" }
+                            ]
+                        }
+                    ]
+                },
+                "layout_code": {
+                    "key": "layout_code",
+                    "name": "code_block",
+                    "label": "Code block",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_code_code", "label": "Code", "name": "code", "type": "textarea", "rows": 8, "new_lines": "" },
+                        { "key": "field_res_code_lang", "label": "Language", "name": "language", "type": "text" }
+                    ]
+                },
+                "layout_download_inline": {
+                    "key": "layout_download_inline",
+                    "name": "download_inline",
+                    "label": "Inline download (file card)",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_dl_file", "label": "File", "name": "file", "type": "file", "return_format": "array" },
+                        { "key": "field_res_dl_label", "label": "Label", "name": "label", "type": "text" }
+                    ]
+                },
+                "layout_video": {
+                    "key": "layout_video",
+                    "name": "video_embed",
+                    "label": "Video embed",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_vid_url", "label": "Video URL", "name": "url", "type": "url", "instructions": "YouTube / Vimeo / direct mp4." },
+                        { "key": "field_res_vid_caption", "label": "Caption", "name": "caption", "type": "text" }
+                    ]
+                },
+                "layout_related_articles": {
+                    "key": "layout_related_articles",
+                    "name": "related_articles",
+                    "label": "Related articles widget",
+                    "display": "block",
+                    "sub_fields": [
+                        { "key": "field_res_rel_mode", "label": "Mode", "name": "mode", "type": "select", "choices": { "auto": "Auto (same Resource Type)", "curated": "Curated" }, "default_value": "auto" },
+                        { "key": "field_res_rel_curated", "label": "Curated picks", "name": "curated", "type": "relationship", "post_type": ["resource"], "return_format": "object" }
+                    ]
+                }
+            }
+        }
+    ],
+    "location": [
+        [
+            { "param": "post_type", "operator": "==", "value": "resource" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Article hero + flexible-content body. Used by Tutorial / Use Case / User Guide / Installation Guide. See docs/PLAN.md Template 9.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

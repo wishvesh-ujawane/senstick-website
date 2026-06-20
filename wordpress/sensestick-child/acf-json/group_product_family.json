@@ -1,0 +1,130 @@
+{
+    "key": "group_product_family",
+    "title": "Product Family",
+    "fields": [
+        {
+            "key": "field_pf_overview",
+            "label": "Overview",
+            "name": "overview",
+            "type": "wysiwyg",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1
+        },
+        {
+            "key": "field_pf_feature_icons",
+            "label": "Feature Icons (inline row)",
+            "name": "feature_icons",
+            "type": "repeater",
+            "instructions": "Hero icon row, e.g. High Accuracy +-0.1C / Real-Time Logging / USB Powered / Rugged & Reliable.",
+            "min": 0,
+            "max": 6,
+            "layout": "table",
+            "button_label": "Add icon",
+            "sub_fields": [
+                { "key": "field_pf_fi_icon", "label": "Icon", "name": "icon", "type": "image", "return_format": "array", "preview_size": "ss-thumb-square" },
+                { "key": "field_pf_fi_label", "label": "Label", "name": "label", "type": "text" }
+            ]
+        },
+        {
+            "key": "field_pf_feature_highlights",
+            "label": "Feature Highlights (5 cards)",
+            "name": "feature_highlights",
+            "type": "repeater",
+            "min": 0,
+            "max": 8,
+            "layout": "block",
+            "button_label": "Add highlight",
+            "sub_fields": [
+                { "key": "field_pf_fh_icon", "label": "Icon", "name": "icon", "type": "image", "return_format": "array" },
+                { "key": "field_pf_fh_title", "label": "Title", "name": "title", "type": "text" },
+                { "key": "field_pf_fh_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 }
+            ]
+        },
+        {
+            "key": "field_pf_configurations",
+            "label": "Available Configurations",
+            "name": "configurations",
+            "type": "repeater",
+            "min": 0,
+            "max": 6,
+            "layout": "block",
+            "button_label": "Add configuration",
+            "sub_fields": [
+                { "key": "field_pf_cfg_image", "label": "Image", "name": "image", "type": "image", "return_format": "array" },
+                { "key": "field_pf_cfg_name", "label": "Name", "name": "name", "type": "text" },
+                {
+                    "key": "field_pf_cfg_bullets",
+                    "label": "Bullet specs",
+                    "name": "bullet_specs",
+                    "type": "repeater",
+                    "layout": "table",
+                    "button_label": "Add bullet",
+                    "sub_fields": [
+                        { "key": "field_pf_cfg_bullet_text", "label": "Bullet", "name": "text", "type": "text" }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_pf_specifications",
+            "label": "Specifications (key/value)",
+            "name": "specifications",
+            "type": "repeater",
+            "layout": "table",
+            "button_label": "Add row",
+            "sub_fields": [
+                { "key": "field_pf_spec_key", "label": "Key", "name": "key", "type": "text" },
+                { "key": "field_pf_spec_value", "label": "Value", "name": "value", "type": "text" }
+            ]
+        },
+        {
+            "key": "field_pf_downloads",
+            "label": "Downloads",
+            "name": "downloads",
+            "type": "relationship",
+            "post_type": ["download"],
+            "filters": ["search", "taxonomy"],
+            "return_format": "object"
+        },
+        {
+            "key": "field_pf_related_resources",
+            "label": "Related Resources",
+            "name": "related_resources",
+            "type": "relationship",
+            "post_type": ["resource"],
+            "filters": ["search", "taxonomy"],
+            "return_format": "object"
+        },
+        {
+            "key": "field_pf_works_with",
+            "label": "Works Seamlessly With",
+            "name": "works_with",
+            "type": "repeater",
+            "min": 0,
+            "max": 6,
+            "layout": "table",
+            "button_label": "Add integration",
+            "sub_fields": [
+                { "key": "field_pf_ww_logo", "label": "Logo", "name": "logo", "type": "image", "return_format": "array" },
+                { "key": "field_pf_ww_name", "label": "Name", "name": "name", "type": "text" },
+                { "key": "field_pf_ww_link", "label": "Link", "name": "link", "type": "url" }
+            ]
+        }
+    ],
+    "location": [
+        [
+            { "param": "post_type", "operator": "==", "value": "product_family" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Product Family page content driven by ACF. Single template renders all fields. See docs/PLAN.md Template 7.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

@@ -1,0 +1,49 @@
+{
+    "key": "group_page_industries",
+    "title": "Page — Industries",
+    "fields": [
+        {
+            "key": "field_ind_intro",
+            "label": "Intro body",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3
+        },
+        {
+            "key": "field_ind_industries",
+            "label": "Industries",
+            "name": "industries",
+            "type": "repeater",
+            "min": 1,
+            "max": 12,
+            "layout": "block",
+            "button_label": "Add industry",
+            "sub_fields": [
+                { "key": "field_ind_icon", "label": "Icon", "name": "icon", "type": "image", "return_format": "array" },
+                { "key": "field_ind_title", "label": "Title", "name": "title", "type": "text", "required": 1 },
+                { "key": "field_ind_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 },
+                { "key": "field_ind_link", "label": "Learn More link", "name": "learn_more_link", "type": "url" },
+                { "key": "field_ind_home", "label": "Featured on Home", "name": "featured_on_home", "type": "true_false", "ui": 1 },
+                { "key": "field_ind_about", "label": "Featured on About", "name": "featured_on_about", "type": "true_false", "ui": 1 }
+            ]
+        }
+    ],
+    "location": [
+        [
+            { "param": "page_template", "operator": "==", "value": "page-industries.php" }
+        ],
+        [
+            { "param": "page", "operator": "==", "value": "industries" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Industries page content. Source of truth for the 6-card grid; reused on About (5 selected) and Home (5 selected) via featured_on_* flags.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

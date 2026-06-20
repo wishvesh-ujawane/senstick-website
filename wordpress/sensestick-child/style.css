@@ -1,0 +1,76 @@
+/*
+ Theme Name:   SENSESTICK Child
+ Theme URI:    https://sensestick.com
+ Description:  Hello Elementor child theme for the SENSESTICK production website. Holds brand tokens, custom post type registration, and ACF JSON.
+ Author:       ByteToBrain
+ Author URI:   https://bytetobrain.com
+ Template:     hello-elementor
+ Version:      0.1.0
+ Text Domain:  sensestick
+*/
+
+/* --------------------------------------------------------------------------
+   Brand tokens — single source of truth.
+   Mirror of the table in docs/PLAN.md "Brand & global styles". Editing here
+   propagates to every component via CSS custom properties. Elementor Site
+   Settings should reference these same values so the Site Editor and the
+   stylesheet do not drift.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --ss-navy: #000064;
+  --ss-yellow: #FFFF00;
+  --ss-white: #FFFFFF;
+  --ss-ink: #111111;
+  --ss-ink-muted: #6B7280;
+  --ss-panel-grey: #F5F7FA;
+  --ss-panel-blue-grey: #E8EDF3;
+  --ss-rule: #E5E7EB;
+
+  /* Typography (px) */
+  --ss-h1: 40px;
+  --ss-h2: 32px;
+  --ss-h3: 24px;
+  --ss-h4: 20px;
+  --ss-body: 16px;
+  --ss-small: 14px;
+  --ss-button: 16px;
+
+  --ss-lh-h1: 1.15;
+  --ss-lh-h2: 1.2;
+  --ss-lh-h3: 1.25;
+  --ss-lh-h4: 1.3;
+  --ss-lh-body: 1.6;
+
+  --ss-fw-bold: 700;
+  --ss-fw-semibold: 600;
+  --ss-fw-regular: 400;
+
+  /* Layout */
+  --ss-radius: 8px;
+  --ss-radius-lg: 10px;
+  --ss-container: 1240px;
+  --ss-section-y: 80px;
+  --ss-section-y-lg: 120px;
+  --ss-section-y-mobile: 48px;
+  --ss-section-y-lg-mobile: 64px;
+  --ss-header-h: 80px;
+}
+
+/* --------------------------------------------------------------------------
+   Minimal base — Elementor handles layout for most pages. Only set things
+   that must hold no matter what (body color, link contrast).
+   -------------------------------------------------------------------------- */
+body {
+  color: var(--ss-ink);
+  font-size: var(--ss-body);
+  line-height: var(--ss-lh-body);
+}
+
+a {
+  color: var(--ss-navy);
+}
+
+/* Yellow is accent-on-navy only. Guard against accidental low-contrast use. */
+.ss-accent-yellow { color: var(--ss-yellow); }
+.ss-on-navy { background: var(--ss-navy); color: var(--ss-white); }

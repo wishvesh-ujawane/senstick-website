@@ -39,6 +39,12 @@ wp-content/cache/
 *.sketch
 *.ai
 
+# Figma exports (local-only, large)
+figma/*.png
+figma/*.jpg
+figma/*.jpeg
+figma/*.webp
+
 # Archives
 *.zip
 *.tar.gz

@@ -1,0 +1,96 @@
+{
+    "key": "group_spreadsheet_integration",
+    "title": "Spreadsheet Integration (Resource subtype)",
+    "fields": [
+        {
+            "key": "field_si_hero_image",
+            "label": "Hero image",
+            "name": "si_hero_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "ss-hero-product",
+            "instructions": "Laptop + device render shown on the right of the hero."
+        },
+        {
+            "key": "field_si_hero_cta_link",
+            "label": "Hero CTA link (View User Guide)",
+            "name": "si_hero_cta_link",
+            "type": "url"
+        },
+        {
+            "key": "field_si_install_steps",
+            "label": "Installation Steps (4 cards)",
+            "name": "si_install_steps",
+            "type": "repeater",
+            "min": 4,
+            "max": 4,
+            "layout": "block",
+            "button_label": "Add step",
+            "sub_fields": [
+                { "key": "field_si_is_icon", "label": "Icon", "name": "icon", "type": "image", "return_format": "array" },
+                { "key": "field_si_is_title", "label": "Title", "name": "title", "type": "text" },
+                { "key": "field_si_is_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 }
+            ]
+        },
+        {
+            "key": "field_si_quickstart_screenshot",
+            "label": "Quick Start screenshot",
+            "name": "si_quickstart_screenshot",
+            "type": "image",
+            "return_format": "array"
+        },
+        {
+            "key": "field_si_quickstart_steps",
+            "label": "Quick Start steps (numbered 1-5)",
+            "name": "si_quickstart_steps",
+            "type": "repeater",
+            "layout": "table",
+            "button_label": "Add step",
+            "sub_fields": [
+                { "key": "field_si_qs_text", "label": "Step", "name": "text", "type": "text" }
+            ]
+        },
+        {
+            "key": "field_si_related_docs",
+            "label": "Related Documentation (4-card grid)",
+            "name": "si_related_docs",
+            "type": "relationship",
+            "post_type": ["resource", "download"],
+            "filters": ["search", "post_type", "taxonomy"],
+            "return_format": "object",
+            "min": 0,
+            "max": 4
+        },
+        {
+            "key": "field_si_fullpage_screenshot",
+            "label": "Full-page product screenshot",
+            "name": "si_fullpage_screenshot",
+            "type": "image",
+            "return_format": "array"
+        },
+        {
+            "key": "field_si_cta_banner_message",
+            "label": "CTA banner message",
+            "name": "si_cta_banner_message",
+            "type": "textarea",
+            "rows": 3,
+            "instructions": "e.g. 'Ready for Cloud-Based Measurement?' (Sheets) or 'Ready for Open-Source Measurement?' (Calc/ONLYOFFICE)."
+        }
+    ],
+    "location": [
+        [
+            { "param": "post_type", "operator": "==", "value": "resource" },
+            { "param": "post_taxonomy", "operator": "==", "value": "resource_type:spreadsheet-integration" }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Extra fields shown only when a Resource has Resource Type = Spreadsheet Integration. Drives Template 11.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}
