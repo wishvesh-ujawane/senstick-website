@@ -49,7 +49,7 @@ Settings → Global Colors → replace the defaults with these 8 named swatches 
 
 ### 1.2 Global Fonts
 
-Settings → Global Fonts → set the family to **Inter** (preferred) or **Source Sans 3**, then configure each role:
+Settings → Global Fonts → set the family to **Inter** (Google Fonts; load weights 400 / 600 / 700, per [PLAN.md → Typography](../PLAN.md)), then configure each role:
 
 | Role | Size | Weight | Line height |
 |---|---|---|---|
