@@ -1,0 +1,92 @@
+{
+    "key": "group_page_getting_started",
+    "title": "Page — Getting Started",
+    "fields": [
+        {
+            "key": "field_gs_intro",
+            "label": "Hero intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3
+        },
+        {
+            "key": "field_gs_quickstart_heading",
+            "label": "Quickstart heading",
+            "name": "quickstart_heading",
+            "type": "text",
+            "default_value": "Quickstart"
+        },
+        {
+            "key": "field_gs_quickstart_cards",
+            "label": "Quickstart cards (4-up)",
+            "name": "quickstart_cards",
+            "type": "repeater",
+            "min": 0,
+            "max": 6,
+            "layout": "block",
+            "button_label": "Add card",
+            "sub_fields": [
+                { "key": "field_gs_qc_icon", "label": "Icon", "name": "icon", "type": "image", "return_format": "array" },
+                { "key": "field_gs_qc_title", "label": "Title", "name": "title", "type": "text", "required": 1 },
+                { "key": "field_gs_qc_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 },
+                { "key": "field_gs_qc_link", "label": "Learn More link", "name": "link", "type": "url" }
+            ]
+        },
+        {
+            "key": "field_gs_integration_heading",
+            "label": "Integrations heading",
+            "name": "integration_heading",
+            "type": "text",
+            "default_value": "Integrations"
+        },
+        {
+            "key": "field_gs_integration_cards",
+            "label": "Integration cards",
+            "name": "integration_cards",
+            "type": "repeater",
+            "min": 0,
+            "max": 8,
+            "layout": "block",
+            "button_label": "Add card",
+            "instructions": "Microsoft Excel / Google Sheets / LibreOffice Calc / Sense Streamer (per Figma). Microsoft Excel page is pending Open Decision #1 in docs/PLAN.md.",
+            "sub_fields": [
+                { "key": "field_gs_ic_logo", "label": "Logo", "name": "logo", "type": "image", "return_format": "array" },
+                { "key": "field_gs_ic_title", "label": "Title", "name": "title", "type": "text", "required": 1 },
+                { "key": "field_gs_ic_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 },
+                { "key": "field_gs_ic_link", "label": "Learn More link", "name": "link", "type": "url" }
+            ]
+        },
+        {
+            "key": "field_gs_support_heading",
+            "label": "Support box heading",
+            "name": "support_heading",
+            "type": "text",
+            "default_value": "Still need help?"
+        },
+        {
+            "key": "field_gs_support_body",
+            "label": "Support box body",
+            "name": "support_body",
+            "type": "textarea",
+            "rows": 2
+        }
+    ],
+    "location": [
+        [
+            { "param": "page_template", "operator": "==", "value": "page-templates/page-getting-started.php" }
+        ],
+        [
+            { "param": "page", "operator": "==", "value": "getting-started" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Getting Started hub landing page. 4 quickstart cards + 4 integration cards + support box.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

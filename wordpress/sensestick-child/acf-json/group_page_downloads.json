@@ -72,7 +72,7 @@
     ],
     "location": [
         [
-            { "param": "page_template", "operator": "==", "value": "page-downloads.php" }
+            { "param": "page_template", "operator": "==", "value": "page-templates/page-downloads.php" }
         ],
         [
             { "param": "page", "operator": "==", "value": "downloads" }

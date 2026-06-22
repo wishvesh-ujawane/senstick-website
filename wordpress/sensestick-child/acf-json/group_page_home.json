@@ -1,0 +1,115 @@
+{
+    "key": "group_page_home",
+    "title": "Page — Home",
+    "fields": [
+        {
+            "key": "field_home_hero_h1",
+            "label": "Hero H1",
+            "name": "hero_h1",
+            "type": "text",
+            "default_value": "Spreadsheet Measurement™"
+        },
+        {
+            "key": "field_home_hero_subhead",
+            "label": "Hero subhead",
+            "name": "hero_subhead",
+            "type": "textarea",
+            "rows": 2,
+            "default_value": "Stream Live Measurement Data Directly Into Spreadsheet Environments"
+        },
+        {
+            "key": "field_home_hero_cta_label",
+            "label": "Hero CTA label",
+            "name": "hero_cta_label",
+            "type": "text",
+            "default_value": "View Product"
+        },
+        {
+            "key": "field_home_hero_cta_link",
+            "label": "Hero CTA link",
+            "name": "hero_cta_link",
+            "type": "url"
+        },
+        {
+            "key": "field_home_hero_image",
+            "label": "Hero image (laptop + device)",
+            "name": "hero_image",
+            "type": "image",
+            "return_format": "array"
+        },
+        {
+            "key": "field_home_benefits",
+            "label": "Spreadsheet Measurement benefits",
+            "name": "benefits",
+            "type": "repeater",
+            "min": 0,
+            "max": 6,
+            "layout": "block",
+            "button_label": "Add benefit",
+            "instructions": "4 stacked benefit blocks per Figma.",
+            "sub_fields": [
+                { "key": "field_home_b_title", "label": "Title", "name": "title", "type": "text", "required": 1 },
+                { "key": "field_home_b_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 }
+            ]
+        },
+        {
+            "key": "field_home_demo_video",
+            "label": "Demo video URL",
+            "name": "demo_video_url",
+            "type": "url",
+            "instructions": "YouTube / Vimeo / direct mp4. Opens in modal on click."
+        },
+        {
+            "key": "field_home_demo_poster",
+            "label": "Demo video poster image",
+            "name": "demo_video_poster",
+            "type": "image",
+            "return_format": "array"
+        },
+        {
+            "key": "field_home_product_overview_body",
+            "label": "Product overview body",
+            "name": "product_overview_body",
+            "type": "textarea",
+            "rows": 4
+        },
+        {
+            "key": "field_home_product_overview_cta_link",
+            "label": "Product overview CTA link",
+            "name": "product_overview_cta_link",
+            "type": "url"
+        },
+        {
+            "key": "field_home_final_cta_h2",
+            "label": "Final CTA — H2",
+            "name": "final_cta_h2",
+            "type": "text",
+            "default_value": "Interested in Spreadsheet Measurement?"
+        },
+        {
+            "key": "field_home_final_cta_subhead",
+            "label": "Final CTA — subhead",
+            "name": "final_cta_subhead",
+            "type": "textarea",
+            "rows": 2
+        }
+    ],
+    "location": [
+        [
+            { "param": "page_template", "operator": "==", "value": "page-templates/page-home.php" }
+        ],
+        [
+            { "param": "page_type", "operator": "==", "value": "front_page" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Homepage hero / band copy / video / final CTA. Use Cases grid is sourced from the Industries page via featured_on_home, not duplicated here.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

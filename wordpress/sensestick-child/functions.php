@@ -69,3 +69,5 @@ add_filter(
 require_once SENSESTICK_CHILD_DIR . '/inc/theme-setup.php';
 require_once SENSESTICK_CHILD_DIR . '/inc/cpts.php';
 require_once SENSESTICK_CHILD_DIR . '/inc/taxonomies.php';
+require_once SENSESTICK_CHILD_DIR . '/inc/helpers.php';
+require_once SENSESTICK_CHILD_DIR . '/inc/seed-pages.php';

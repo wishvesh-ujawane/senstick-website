@@ -1,0 +1,84 @@
+{
+    "key": "group_page_about",
+    "title": "Page — About",
+    "fields": [
+        {
+            "key": "field_about_subhead",
+            "label": "Hero subhead",
+            "name": "hero_subhead",
+            "type": "textarea",
+            "rows": 2,
+            "default_value": "Engineering measurement tools that work with your existing spreadsheet workflow."
+        },
+        {
+            "key": "field_about_philosophy_quote",
+            "label": "Philosophy quote",
+            "name": "philosophy_quote",
+            "type": "textarea",
+            "rows": 4,
+            "instructions": "Shown inside the light blue-grey panel with the yellow left border."
+        },
+        {
+            "key": "field_about_philosophy_subtitle",
+            "label": "Philosophy subtitle",
+            "name": "philosophy_subtitle",
+            "type": "text",
+            "default_value": "Spreadsheet Measurement"
+        },
+        {
+            "key": "field_about_philosophy_tagline",
+            "label": "Philosophy tagline",
+            "name": "philosophy_tagline",
+            "type": "text",
+            "default_value": "One Workflow. Any Spreadsheet. Complete Flexibility."
+        },
+        {
+            "key": "field_about_work_steps",
+            "label": "How SENSESTICK Works (5 circular cards)",
+            "name": "work_steps",
+            "type": "repeater",
+            "min": 0,
+            "max": 6,
+            "layout": "block",
+            "button_label": "Add step",
+            "sub_fields": [
+                { "key": "field_about_ws_icon", "label": "Icon (SVG/PNG)", "name": "icon", "type": "image", "return_format": "array" },
+                { "key": "field_about_ws_title", "label": "Title", "name": "title", "type": "text", "required": 1 },
+                { "key": "field_about_ws_body", "label": "Body", "name": "body", "type": "textarea", "rows": 3 }
+            ]
+        },
+        {
+            "key": "field_about_vision_image",
+            "label": "Vision section — image",
+            "name": "vision_image",
+            "type": "image",
+            "return_format": "array"
+        },
+        {
+            "key": "field_about_vision_body",
+            "label": "Vision section — body",
+            "name": "vision_body",
+            "type": "wysiwyg",
+            "tabs": "visual",
+            "toolbar": "basic"
+        }
+    ],
+    "location": [
+        [
+            { "param": "page_template", "operator": "==", "value": "page-templates/page-about.php" }
+        ],
+        [
+            { "param": "page", "operator": "==", "value": "about" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "About page content. Industry cards are pulled from the Industries page via the featured_on_about flag, not duplicated here.",
+    "show_in_rest": 0,
+    "modified": 1781913600
+}

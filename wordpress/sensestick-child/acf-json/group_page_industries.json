@@ -30,7 +30,7 @@
     ],
     "location": [
         [
-            { "param": "page_template", "operator": "==", "value": "page-industries.php" }
+            { "param": "page_template", "operator": "==", "value": "page-templates/page-industries.php" }
         ],
         [
             { "param": "page", "operator": "==", "value": "industries" }
