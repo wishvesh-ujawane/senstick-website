@@ -152,70 +152,89 @@ From this point on, ACF reads + writes JSON back to `wordpress/sensestick-child/
 
 ## Phase 4 — Mirror brand tokens in Elementor
 
-The child theme's `style.css` defines CSS variables like `--ss-navy: #000064`. **Elementor doesn't read those automatically** — you have to mirror them in Site Settings once. They become the source of truth Elementor widgets pull from.
+The child theme's `style.css` defines CSS variables like `--ss-navy: #000064` and `--ss-font-sans: 'Inter'`. **Elementor doesn't read those automatically** — you have to mirror them in Site Settings once. They become the source of truth Elementor widgets pull from. Do all four sub-sections below in one sitting; values come from [PLAN.md → Brand & global styles](PLAN.md#brand--global-styles-locked-from-figma) and must not drift from `style.css`.
 
-WP Admin → **Elementor → Site Settings → Global Colors**:
+Open the Elementor editor on any page, then top-left **hamburger menu → Site Settings**.
+
+### 4.1  Global Colors
+
+Delete the 4 default colors, then click **+ Add Color** for each row:
 
 | Token name | Hex | Use in Elementor |
 |---|---|---|
 | Navy | `#000064` | Primary color |
 | Yellow | `#FFFF00` | Accent color |
+| White | `#FFFFFF` | Section bg |
 | Ink | `#111111` | Text |
 | Ink Muted | `#6B7280` | Caption / metadata |
 | Panel Grey | `#F5F7FA` | Section bg |
 | Panel Blue Grey | `#E8EDF3` | About philosophy panel |
 | Rule | `#E5E7EB` | Dividers |
 
-**Global Fonts** — primary `Inter` (or `Source Sans 3`), set sizes per the brand-token table in [PLAN.md](PLAN.md#typography).
+### 4.2  Global Fonts
 
-**Site Settings → Buttons** — border radius **8 px**, padding per spec.
+Font family is locked to **Inter** (Google Fonts; loaded automatically by Elementor on first save). Set the 4 typography presets:
 
-**Site Settings → Layout** — container max width **1240 px**, breakpoints mobile <768 / tablet 768–1024 / desktop >1024.
+| Preset | Family | Weight | Use |
+|---|---|---|---|
+| Primary | Inter | 700 | Headings (H1–H2) |
+| Secondary | Inter | 600 | H3–H4 |
+| Text | Inter | 400 | Body |
+| Accent | Inter | 600 | Buttons, badges |
+
+Then **Theme Style → Typography**, set sizes:
+
+| Element | px | Weight | Line-height |
+|---|---|---|---|
+| H1 | 40 | 700 | 1.15 |
+| H2 | 32 | 700 | 1.2 |
+| H3 | 24 | 600 | 1.25 |
+| H4 | 20 | 600 | 1.3 |
+| Body | 16 | 400 | 1.6 |
+
+### 4.3  Buttons
+
+**Theme Style → Buttons** (these match `.ss-btn` in [style.css](../wordpress/sensestick-child/style.css)):
+
+- **Typography**: size 16, weight 600, line-height 1.
+- **Padding**: top/bottom `12`, left/right `24`.
+- **Border radius**: `8` px (apply to all corners).
+- **Background**: Navy global color.
+- **Text color**: White.
+- **Hover background**: `#00004a`.
+- **Hover text**: White.
+
+*(The yellow `Book Demo` button and outline variants are added as Elementor button widget presets per-page; you don't set them globally.)*
+
+### 4.4  Layout
+
+- **Container Width**: `1240` px.
+- **Widgets default padding**: `0`.
+- **Page Title selector**: off (templates render their own hero).
+- **Breakpoints**: mobile `<768`, tablet `768–1024`, desktop `>1024` (defaults match — leave alone).
+
+Click **Save Changes**. Open any page on the front-end + DevTools → Computed → `font-family` to confirm Inter loaded.
 
 ---
 
-## Phase 5 — Build pages (Elementor)
+## Phase 5 — Seed content + build pages
 
-Pages to create in WP Admin → **Pages → Add New**:
+Content seeding (CPT entries + ACF panels on static pages + primary menu) is now a **guided click-by-click walkthrough** in the build plan. Do it in this order:
 
-- Home (set as static homepage in **Settings → Reading**)
-- About
-- Contact Us
-- Book a Demo
-- Industries
-- Downloads
-- Getting Started
+1. **Create the empty Pages** first — WP Admin → **Pages → Add New** for each: Home, About, Contact Us, Book a Demo, Industries, Downloads, Getting Started (and optionally a Products landing page). Leave them blank; ACF / Elementor will fill them.
+2. **Set Home as the static homepage** — Settings → Reading → *A static page* → Homepage = Home.
+3. **Follow [PLAN.md → Phase 5](PLAN.md#phase-5--content-seeding-guided-walkthrough--placeholder-content-first)** step-by-step:
+   - 5.0 Glossary (read first if "CPT" / "ACF" / "Taxonomy" are unfamiliar).
+   - 5.1 Pre-flight check.
+   - 5.2 Seed the 6 placeholder **Downloads**.
+   - 5.3 Seed the **Product Family** (TS Series, full ACF).
+   - 5.4 Seed the 6 placeholder **Resources** (1 Tutorial / 1 Use Case / 1 User Guide / 3 Spreadsheet Integrations).
+   - 5.5 Fill the **Industries** + **Downloads** static pages via ACF.
+   - 5.6 Build the **Primary menu**.
+   - 5.7 Exit criteria.
+4. **Build the 11 Elementor templates** per [PLAN.md → Phase 4](PLAN.md#phase-4--templates-11-effective-8-user-visible-page-types). Each template binds to either a Page or a CPT via Elementor Pro Theme Builder. Templates and content can be built in either order — if you build content first (per step 3), every template has real data to bind to as you go.
 
-Plus CPT entries:
-
-- 1 **Product Family** post (TS Series) at **Product Families → Add New**.
-- 3 **Resource** posts with taxonomy `Spreadsheet Integration`: Google Sheets, LibreOffice Calc, ONLYOFFICE Spreadsheet.
-- 1+ **Resource** post each for Tutorial, Use Case, User Guide (to populate listings).
-- All file PDFs as **Download** posts.
-
-Then build the 11 Elementor templates per [PLAN.md → Phase 4](PLAN.md#phase-4--templates-11-effective-8-user-visible-page-types). Each template binds to either a Page or a CPT via Theme Builder.
-
-### Menu construction
-
-WP Admin → **Appearance → Menus** → create `Primary Menu`:
-
-- Home
-- Getting Started ▾
-  - Microsoft Excel → **Custom Link** (client-supplied external URL placeholder)
-  - Google Sheets → Resource post
-  - LibreOffice Calc → Resource post
-  - ONLYOFFICE Spreadsheet → Resource post
-- Products ▾
-  - TS Series → Product Family post
-- Resources ▾
-  - Tutorials → category archive `/resource-type/tutorial/`
-  - Use Case → `/resource-type/use-case/`
-  - Industries → Industries page
-  - Downloads → Downloads page
-- About
-- Contact
-
-Assign location: **Primary**.
+Placeholder content (Lorem + dummy PDF + Unsplash images) is fine for Phase 5 sign-off. Real client copy + real PDFs + ONLYOFFICE copy fixes + footer tagline are tracked in [PLAN.md → 5.8 Deferred](PLAN.md#58-deferred-to-a-later-content-swap-pass-not-a-phase-5-blocker).
 
 ---
 

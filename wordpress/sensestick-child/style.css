@@ -27,7 +27,8 @@
   --ss-panel-blue-grey: #E8EDF3;
   --ss-rule: #E5E7EB;
 
-  /* Typography (px) */
+  /* Typography */
+  --ss-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --ss-h1: 40px;
   --ss-h2: 32px;
   --ss-h3: 24px;
@@ -63,6 +64,7 @@
    -------------------------------------------------------------------------- */
 body {
   color: var(--ss-ink);
+  font-family: var(--ss-font-sans);
   font-size: var(--ss-body);
   line-height: var(--ss-lh-body);
 }
@@ -74,3 +76,96 @@ a {
 /* Yellow is accent-on-navy only. Guard against accidental low-contrast use. */
 .ss-accent-yellow { color: var(--ss-yellow); }
 .ss-on-navy { background: var(--ss-navy); color: var(--ss-white); }
+
+/* --------------------------------------------------------------------------
+   Button variants — rendered as Elementor classes OR raw HTML. Same radius
+   for all; aspect ratio (pill vs rounded-square) is determined by content
+   width, not by a separate token. See docs/PLAN.md "Buttons".
+   -------------------------------------------------------------------------- */
+.ss-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: var(--ss-button);
+  font-weight: var(--ss-fw-semibold);
+  line-height: 1;
+  border-radius: var(--ss-radius);
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.ss-btn--primary       { background: var(--ss-navy);   color: var(--ss-white); }
+.ss-btn--primary:hover { background: #00004a;          color: var(--ss-white); }
+.ss-btn--yellow        { background: var(--ss-yellow); color: var(--ss-navy);  }
+.ss-btn--yellow:hover  { background: #f5f500;          color: var(--ss-navy);  }
+.ss-btn--outline       { background: transparent;      color: var(--ss-navy);  border-color: var(--ss-navy); }
+.ss-btn--outline:hover { background: var(--ss-navy);   color: var(--ss-white); }
+.ss-btn--outline-on-navy { background: transparent; color: var(--ss-white); border-color: var(--ss-white); }
+.ss-btn--outline-on-navy:hover { background: var(--ss-white); color: var(--ss-navy); }
+.ss-btn--icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--ss-navy);
+  color: var(--ss-white);
+  border-radius: var(--ss-radius);
+}
+.ss-btn--icon:hover { background: #00004a; }
+
+/* --------------------------------------------------------------------------
+   File Card — used in Product Family downloads, Downloads page, Resource
+   inline downloads. Icon + label + meta (type, size) + right-aligned icon button.
+   -------------------------------------------------------------------------- */
+.ss-file-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--ss-white);
+  border: 1px solid var(--ss-rule);
+  border-radius: var(--ss-radius);
+}
+.ss-file-card__icon  { flex: 0 0 40px; color: var(--ss-navy); }
+.ss-file-card__body  { flex: 1 1 auto; min-width: 0; }
+.ss-file-card__label { font-weight: var(--ss-fw-semibold); color: var(--ss-ink); }
+.ss-file-card__meta  { font-size: var(--ss-small); color: var(--ss-ink-muted); }
+.ss-file-card__cta   { flex: 0 0 auto; }
+
+/* --------------------------------------------------------------------------
+   Circular Step Card — About "How SENSESTICK Works" (5-up). Navy circle +
+   yellow icon centered + title + body underneath.
+   -------------------------------------------------------------------------- */
+.ss-step-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+.ss-step-circle__disc {
+  width: 120px;
+  height: 120px;
+  background: var(--ss-navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ss-yellow);
+}
+.ss-step-circle__title { font-size: var(--ss-h4); font-weight: var(--ss-fw-semibold); color: var(--ss-navy); }
+.ss-step-circle__body  { color: var(--ss-ink-muted); }
+
+/* --------------------------------------------------------------------------
+   Breadcrumb (fallback used only when Elementor breadcrumb is not present).
+   -------------------------------------------------------------------------- */
+.ss-breadcrumb {
+  font-size: var(--ss-small);
+  color: var(--ss-ink-muted);
+  margin-bottom: 16px;
+}
+.ss-breadcrumb a { color: var(--ss-ink-muted); text-decoration: none; }
+.ss-breadcrumb a:hover { color: var(--ss-navy); text-decoration: underline; }
+.ss-breadcrumb [aria-current="page"] { color: var(--ss-navy); font-weight: var(--ss-fw-semibold); }
+.ss-breadcrumb__sep { margin: 0 6px; }
