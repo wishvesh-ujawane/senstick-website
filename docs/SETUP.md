@@ -24,8 +24,9 @@ Senstick/
 │   └── sensestick-child/    ← Hello Elementor child theme. UPLOAD THIS TO WORDPRESS.
 │       ├── style.css
 │       ├── functions.php
-│       ├── inc/             ← CPTs, taxonomies, theme setup
-│       └── acf-json/        ← 6 ACF field group definitions
+│       ├── inc/             ← CPTs, taxonomies, theme setup, helpers, page seeder
+│       ├── page-templates/  ← 7 page-template stubs (Home, About, Industries, etc.)
+│       └── acf-json/        ← 9 ACF field group definitions
 ├── content/                 ← Drafted page copy (to be filled)
 ├── assets/                  ← Brand assets, logos, exports for upload
 ├── qa/                      ← QA notes / screenshots
@@ -90,6 +91,8 @@ After activation:
 
 - ✅ 3 new admin menus appear in the sidebar: **Product Families**, **Resources**, **Downloads**.
 - ✅ Canonical taxonomy terms are auto-seeded (Tutorial, Use Case, User Guide, Spreadsheet Integration, Installation Guide, etc.). Check at **Resources → Resource Types** and **Downloads → Categories** / **Types**.
+- ✅ **8 canonical pages are auto-created** by `inc/seed-pages.php`: Home, Getting Started, Industries, Downloads, About, Contact, Book a Demo. Home is set as the static front page. Check at **Pages → All Pages**.
+- ✅ Each auto-created page has its **Page Attributes → Template** pre-set (e.g. Home → `SENSESTICK Home`) so the matching ACF group binds.
 - ✅ Image sizes and nav menu locations (`primary`, `footer`) are registered.
 
 #### Option B — SFTP sync (recommended for ongoing dev)
@@ -136,15 +139,18 @@ Do NOT install:
 
 After ACF Free is activated:
 
-1. Go to **ACF → Field Groups**. A yellow notice **"Sync available"** appears with 6 groups.
+1. Go to **ACF → Field Groups**. A yellow notice **"Sync available"** appears with 9 groups.
 2. Tick **Bulk select** → **Sync changes**.
-3. Confirm all 6 groups now show in the list:
+3. Confirm all 9 groups now show in the list:
    - Product Family
-   - Resource — Article
-   - Resource — Spreadsheet Integration (conditional)
+   - Resource Article
+   - Spreadsheet Integration (Resource subtype) — conditional on `resource_type = spreadsheet-integration`
    - Download
-   - Page: Industries
-   - Page: Downloads
+   - Page — Home
+   - Page — About
+   - Page — Industries
+   - Page — Getting Started
+   - Page — Downloads
 
 From this point on, ACF reads + writes JSON back to `wordpress/sensestick-child/acf-json/` whenever you edit a field group in WP Admin. Pull those changes back to your laptop via SFTP so your repo stays in sync.
 
@@ -152,89 +158,64 @@ From this point on, ACF reads + writes JSON back to `wordpress/sensestick-child/
 
 ## Phase 4 — Mirror brand tokens in Elementor
 
-The child theme's `style.css` defines CSS variables like `--ss-navy: #000064` and `--ss-font-sans: 'Inter'`. **Elementor doesn't read those automatically** — you have to mirror them in Site Settings once. They become the source of truth Elementor widgets pull from. Do all four sub-sections below in one sitting; values come from [PLAN.md → Brand & global styles](PLAN.md#brand--global-styles-locked-from-figma) and must not drift from `style.css`.
+The child theme's `style.css` defines CSS variables like `--ss-navy: #000064`. **Elementor doesn't read those automatically** — you have to mirror them in Site Settings once. They become the source of truth Elementor widgets pull from.
 
-Open the Elementor editor on any page, then top-left **hamburger menu → Site Settings**.
-
-### 4.1  Global Colors
-
-Delete the 4 default colors, then click **+ Add Color** for each row:
+WP Admin → **Elementor → Site Settings → Global Colors**:
 
 | Token name | Hex | Use in Elementor |
 |---|---|---|
 | Navy | `#000064` | Primary color |
 | Yellow | `#FFFF00` | Accent color |
-| White | `#FFFFFF` | Section bg |
 | Ink | `#111111` | Text |
 | Ink Muted | `#6B7280` | Caption / metadata |
 | Panel Grey | `#F5F7FA` | Section bg |
 | Panel Blue Grey | `#E8EDF3` | About philosophy panel |
 | Rule | `#E5E7EB` | Dividers |
 
-### 4.2  Global Fonts
+**Global Fonts** — primary `Inter` (or `Source Sans 3`), set sizes per the brand-token table in [PLAN.md](PLAN.md#typography).
 
-Font family is locked to **Inter** (Google Fonts; loaded automatically by Elementor on first save). Set the 4 typography presets:
+**Site Settings → Buttons** — border radius **8 px**, padding per spec.
 
-| Preset | Family | Weight | Use |
-|---|---|---|---|
-| Primary | Inter | 700 | Headings (H1–H2) |
-| Secondary | Inter | 600 | H3–H4 |
-| Text | Inter | 400 | Body |
-| Accent | Inter | 600 | Buttons, badges |
-
-Then **Theme Style → Typography**, set sizes:
-
-| Element | px | Weight | Line-height |
-|---|---|---|---|
-| H1 | 40 | 700 | 1.15 |
-| H2 | 32 | 700 | 1.2 |
-| H3 | 24 | 600 | 1.25 |
-| H4 | 20 | 600 | 1.3 |
-| Body | 16 | 400 | 1.6 |
-
-### 4.3  Buttons
-
-**Theme Style → Buttons** (these match `.ss-btn` in [style.css](../wordpress/sensestick-child/style.css)):
-
-- **Typography**: size 16, weight 600, line-height 1.
-- **Padding**: top/bottom `12`, left/right `24`.
-- **Border radius**: `8` px (apply to all corners).
-- **Background**: Navy global color.
-- **Text color**: White.
-- **Hover background**: `#00004a`.
-- **Hover text**: White.
-
-*(The yellow `Book Demo` button and outline variants are added as Elementor button widget presets per-page; you don't set them globally.)*
-
-### 4.4  Layout
-
-- **Container Width**: `1240` px.
-- **Widgets default padding**: `0`.
-- **Page Title selector**: off (templates render their own hero).
-- **Breakpoints**: mobile `<768`, tablet `768–1024`, desktop `>1024` (defaults match — leave alone).
-
-Click **Save Changes**. Open any page on the front-end + DevTools → Computed → `font-family` to confirm Inter loaded.
+**Site Settings → Layout** — container max width **1240 px**, breakpoints mobile <768 / tablet 768–1024 / desktop >1024.
 
 ---
 
-## Phase 5 — Seed content + build pages
+## Phase 5 — Build pages (Elementor)
 
-Content seeding (CPT entries + ACF panels on static pages + primary menu) is now a **guided click-by-click walkthrough** in the build plan. Do it in this order:
+> **Note**: The 8 canonical pages (Home, Getting Started, Industries, Downloads, About, Contact, Book a Demo) are **auto-created on theme activation** by `inc/seed-pages.php`. You do NOT need to add them manually. Home is also auto-set as the static front page.
+>
+> Verify at **Pages → All Pages** — you should see all 7 published pages with their `Template` column pre-filled. If pages are missing (because you uploaded an older theme zip), re-upload the latest `sensestick-child/` and re-activate the theme — the seeder runs again and is idempotent (it won't duplicate existing pages).
 
-1. **Create the empty Pages** first — WP Admin → **Pages → Add New** for each: Home, About, Contact Us, Book a Demo, Industries, Downloads, Getting Started (and optionally a Products landing page). Leave them blank; ACF / Elementor will fill them.
-2. **Set Home as the static homepage** — Settings → Reading → *A static page* → Homepage = Home.
-3. **Follow [PLAN.md → Phase 5](PLAN.md#phase-5--content-seeding-guided-walkthrough--placeholder-content-first)** step-by-step:
-   - 5.0 Glossary (read first if "CPT" / "ACF" / "Taxonomy" are unfamiliar).
-   - 5.1 Pre-flight check.
-   - 5.2 Seed the 6 placeholder **Downloads**.
-   - 5.3 Seed the **Product Family** (TS Series, full ACF).
-   - 5.4 Seed the 6 placeholder **Resources** (1 Tutorial / 1 Use Case / 1 User Guide / 3 Spreadsheet Integrations).
-   - 5.5 Fill the **Industries** + **Downloads** static pages via ACF.
-   - 5.6 Build the **Primary menu**.
-   - 5.7 Exit criteria.
-4. **Build the 11 Elementor templates** per [PLAN.md → Phase 4](PLAN.md#phase-4--templates-11-effective-8-user-visible-page-types). Each template binds to either a Page or a CPT via Elementor Pro Theme Builder. Templates and content can be built in either order — if you build content first (per step 3), every template has real data to bind to as you go.
+What you DO need to create manually:
 
-Placeholder content (Lorem + dummy PDF + Unsplash images) is fine for Phase 5 sign-off. Real client copy + real PDFs + ONLYOFFICE copy fixes + footer tagline are tracked in [PLAN.md → 5.8 Deferred](PLAN.md#58-deferred-to-a-later-content-swap-pass-not-a-phase-5-blocker).
+- 1 **Product Family** post (TS Series) at **Product Families → Add New**.
+- 3 **Resource** posts with Resource Type = `Spreadsheet Integration`: Google Sheets, LibreOffice Calc, ONLYOFFICE Spreadsheet.
+- 1+ **Resource** post each for Tutorial, Use Case, User Guide (to populate listings).
+- All file PDFs as **Download** posts.
+
+Then build the 11 Elementor templates per [PLAN.md → Phase 4](PLAN.md#phase-4--templates-11-effective-8-user-visible-page-types). Each template binds to either a Page or a CPT via Theme Builder.
+
+### Menu construction
+
+WP Admin → **Appearance → Menus** → create `Primary Menu`:
+
+- Home
+- Getting Started ▾
+  - Microsoft Excel → **Custom Link** (client-supplied external URL placeholder)
+  - Google Sheets → Resource post
+  - LibreOffice Calc → Resource post
+  - ONLYOFFICE Spreadsheet → Resource post
+- Products ▾
+  - TS Series → Product Family post
+- Resources ▾
+  - Tutorials → category archive `/resource-type/tutorial/`
+  - Use Case → `/resource-type/use-case/`
+  - Industries → Industries page
+  - Downloads → Downloads page
+- About
+- Contact
+
+Assign location: **Primary**.
 
 ---
 
@@ -319,11 +300,14 @@ After launch, write a 1–2 page CMS guide covering: create tutorial, create use
 | File / folder | What you do with it |
 |---|---|
 | `wordpress/sensestick-child/style.css` | Edit to change brand tokens. Mirror changes in Elementor Site Settings. |
-| `wordpress/sensestick-child/functions.php` | Add custom shortcodes, enqueue extra assets. Rarely touched. |
+| `wordpress/sensestick-child/functions.php` | Bootstrap: enqueues, ACF JSON path, requires `inc/*`. Rarely touched. |
 | `wordpress/sensestick-child/inc/cpts.php` | Edit if you add a new CPT (e.g. `case_study`) or change slugs. |
 | `wordpress/sensestick-child/inc/taxonomies.php` | Edit to add new taxonomy terms (then re-activate theme to seed). |
 | `wordpress/sensestick-child/inc/theme-setup.php` | Edit to add new image sizes or menu locations. |
-| `wordpress/sensestick-child/acf-json/*.json` | Auto-written by ACF when you edit a field group. Pull via SFTP to keep repo in sync. |
+| `wordpress/sensestick-child/inc/helpers.php` | Template helpers (`ss_get_featured_industries()`, file-size formatter, breadcrumb fallback, downloads-by-category). Use from Elementor dynamic tags / shortcodes. |
+| `wordpress/sensestick-child/inc/seed-pages.php` | Runs on theme activation; creates the 8 canonical pages with the right Page Template and sets Home as front page. Idempotent. |
+| `wordpress/sensestick-child/page-templates/*.php` | 7 thin page-template stubs Elementor renders into. Required for ACF location rules (`page_template == page-templates/page-X.php`). |
+| `wordpress/sensestick-child/acf-json/*.json` | 9 field groups. Auto-written by ACF when you edit a group in WP Admin. Pull via SFTP to keep repo in sync. |
 | `docs/PLAN.md` | Read before building each template. Update when decisions change. |
 | `figma/*.png` | Visual reference per template. Open the matching file when building. |
 | `content/` | Stage Markdown drafts of page copy before pasting into Elementor. |
@@ -334,5 +318,7 @@ After launch, write a 1–2 page CMS guide covering: create tutorial, create use
 
 ## You are currently here
 
-✅ Repo scaffolded, child theme written, plan documented, all pushed to GitHub.
-🔜 **Next step**: Phase 1 above (buy Hostinger plan + register domain).
+✅ Phases 1–3 done on Hostinger: WP installed, child theme uploaded + activated, plugin stack installed, ACF synced.
+🔄 Phase 4 partial: Global Colors done. Global Fonts + Buttons + Layout still pending.
+⚠️ **Live server has only 6 ACF groups synced** (older theme zip). Re-upload `wordpress/sensestick-child/` (zip-overwrite or SFTP) and re-sync ACF to pick up the 3 page groups (Home / About / Getting Started), the auto-page seeder, helpers, and the `page-templates/` folder. Re-activating is safe — the seeder is idempotent and won't duplicate pages.
+🔜 **Next**: finish Phase 4 (Global Fonts + Buttons + Layout), then Phase 5 (build templates in Elementor Theme Builder).
