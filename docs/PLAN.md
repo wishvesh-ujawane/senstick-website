@@ -1,5 +1,7 @@
 # SENSESTICK Website — Build Plan (Figma-Reconciled)
 
+> **See also**: Per-page click-by-click build guides live in [docs/page-guides/](page-guides/) — start with [01-home.md](page-guides/01-home.md).
+>
 > **Status**: Phase 0 + Phase 2 scaffolding complete. Child theme + CPTs + taxonomies + 6 ACF field groups committed and pushed to [github.com/wishvesh-ujawane/senstick-website](https://github.com/wishvesh-ujawane/senstick-website). Currently unblocked: Hostinger provisioning + theme upload (see [docs/SETUP.md](SETUP.md)).
 > **Hosting**: Direct-to-Hostinger (no LocalWP). The repo is the source of truth for theme code; Hostinger File Manager / SFTP is the deploy target.
 > **Authority**: High-fidelity Figma exports (`figma/*.png`, 20 frames) are the source of truth for layout, components, and tokens. Requirements brief (`docs/project-brief.pdf`) remains authoritative for scope. Datasheet (`docs/TS-Series-datasheet.pdf`) authoritative for product specifications. Low-fi wireframes (`figma/website-wireframes.pdf`) retained for historical reference only.
@@ -76,21 +78,19 @@ Tutorials article previews show a green chart accent (data-viz only) — not pro
 
 ### Typography
 
-Single sans-serif family — **Inter** (Google Fonts; load weights 400 / 600 / 700). Loaded in Elementor Site Settings → Global Fonts AND mirrored in `style.css` as `--ss-font-sans`. The two must not drift.
+Single sans-serif family — Inter or Source Sans 3. Approximate scale (verify on first render):
 
 | Token | px | Weight | Line-height |
 |---|---|---|---|
-| `--h1` | 40 | 700 | 1.15 |
-| `--h2` | 32 | 700 | 1.2 |
-| `--h3` | 24 | 600 | 1.25 |
-| `--h4` | 20 | 600 | 1.3 |
+| `--h1` | 36–40 | 700 | 1.15 |
+| `--h2` | 28–32 | 700 | 1.2 |
+| `--h3` | 22–24 | 600 | 1.25 |
+| `--h4` | 18–20 | 600 | 1.3 |
 | `--body` | 16 | 400 | 1.6 |
 | `--small` | 14 | 400 | 1.5 |
 | `--button` | 16 | 600 | 1 |
 
-### Buttons (rounded 8 px radius)
-
-**Padding 12 × 24 px, radius 8 px, font-size 16 px, font-weight 600, line-height 1.** Same for all variants; icon-only download buttons override to 44 × 44 px square with no padding.
+### Buttons (rounded ~8–10 px radius)
 
 | Variant | Fill | Text | Border | When |
 |---|---|---|---|---|
@@ -139,12 +139,7 @@ The child theme already ships CPTs, taxonomies (with seeded terms), image sizes,
 14. **Already in code** ✅: 6 ACF JSON field groups in [wordpress/sensestick-child/acf-json/](../wordpress/sensestick-child/acf-json/) covering Product Family, Resource (10-block flexible content), Spreadsheet Integration variant, Download, Industries page, Downloads page.
 15. **Already in code** ✅: Brand tokens as CSS custom properties in [wordpress/sensestick-child/style.css](../wordpress/sensestick-child/style.css).
 16. **In WP admin (manual)**: After theme activation, go to ACF → Field Groups → Sync (yellow banner) to bulk-sync the 6 groups.
-17. **In Elementor Site Settings (manual)** — Elementor does not read the CSS variables, so paste them in by hand. Open `Elementor → Site Settings` (top-left hamburger inside any Elementor edit screen) and configure each panel:
-    - **Global Colors** → delete the defaults, then add custom colors matching the Colors table exactly: `Navy #000064`, `Yellow #FFFF00`, `White #FFFFFF`, `Ink #111111`, `Ink Muted #6B7280`, `Panel Grey #F5F7FA`, `Panel Blue-Grey #E8EDF3`, `Rule #E5E7EB`.
-    - **Global Fonts** → set `Primary` = Inter weight 700, `Secondary` = Inter weight 400, `Text` = Inter weight 400, `Accent` = Inter weight 600. Sizes via `Theme Style → Typography`: H1 40 / H2 32 / H3 24 / H4 20 / Body 16. (First time you save, Elementor will auto-import Inter from Google Fonts.)
-    - **Theme Style → Buttons** → Typography size 16, weight 600. Padding `12` top/bottom × `24` left/right. Border-radius `8` px. Background = Navy global color, text = White. Hover = darker navy.
-    - **Layout** → Container Width `1240`. Widgets Default Padding `0`. Page Title selector off (templates render their own hero).
-    - **Site Identity** → upload the SENSESTICK logo (yellow on navy), set site name + tagline.
+17. **In Elementor Site Settings (manual)**: mirror the brand tokens (Global Colors, Global Fonts, Buttons radius 8 px, Container 1240 px). Elementor does not read the CSS variables automatically.
 18. **Static pages** to create in WP admin: Home, Products (optional landing), About, Contact Us, Book a Demo, Industries, Downloads, Getting Started.
 19. **Menu construction** — primary menu matches the Figma nav exactly. Header + footer built via Elementor Pro Theme Builder. The Microsoft Excel item under Getting Started is a **Custom Link** (external URL placeholder); the other three integration items (Google Sheets, LibreOffice Calc, ONLYOFFICE Spreadsheet) are linked to their internal Spreadsheet Integration `Resource` posts.
 
@@ -331,167 +326,17 @@ Dedicated single template for posts in the `Spreadsheet Integration` term. All t
 
 ACF on this template: `hero_image`, `hero_cta_link`, `install_steps[] { icon, title, body }`, `quickstart_screenshot`, `quickstart_steps[]`, `related_docs[] (relationship)`, `fullpage_screenshot`, `cta_banner_message`.
 
-### Phase 5 — Content seeding *(guided walkthrough — placeholder content first)*
+### Phase 5 — Content seeding
 
-> **Goal of this phase**: every CPT has at least one published placeholder post, every static page has its ACF panel filled, and the primary menu renders the full Figma IA. Real client copy / real PDFs / real industry photography are swapped in during a later content pass — they are NOT a Phase 5 blocker.
-
-#### 5.0 Glossary (read before you start)
-
-| Term | What it actually means in your WP admin |
-|---|---|
-| **CPT** *(Custom Post Type)* | A separate menu in the left sidebar for one kind of content. Your child theme already created three: **Product Families**, **Resources**, **Downloads**. Treat each one like the built-in `Posts` menu — Add New, fill in the form, Publish. |
-| **ACF** *(Advanced Custom Fields)* | A plugin that adds extra input boxes underneath the standard Title / Editor when you edit a post or page. You don't configure ACF — the child theme already shipped 6 field groups. You just fill them in. |
-| **Taxonomy** | A category system attached to a CPT. `Resources` uses one called `Resource Type`. `Downloads` uses two: `Download Category` and `Download Type`. You'll see them as checkbox lists in the right sidebar of the edit screen. |
-| **Term** | One entry inside a taxonomy. Example: "Tutorial" is a term of `Resource Type`. The terms were already seeded by the child theme — you do not create them, you just tick the right box. |
-| **Static Page** | The built-in `Pages` menu. Home / About / Contact / Industries / Downloads / Getting Started / Book a Demo all live here, not in any CPT. |
-| **Reading key** | When the walkthrough says *"WP admin → Resources → Add New"*, that means: log in to `yourdomain.com/wp-admin`, click `Resources` in the left sidebar, then click the `Add New` button at the top. |
-
-#### 5.1 Pre-flight check
-
-Before seeding any content, confirm:
-
-- [ ] Phase 2 step 16 done — ACF → Field Groups shows **6 groups** all marked Synced (no yellow "Sync available" banner).
-- [ ] Phase 2 step 18 done — `Pages` menu contains 8 empty pages: Home, Products, About, Contact Us, Book a Demo, Industries, Downloads, Getting Started.
-- [ ] Plugins active — Elementor, Elementor Pro, ACF, your form plugin.
-- [ ] Left sidebar shows **Product Families**, **Resources**, **Downloads** menu items. If any are missing, the child theme is not active.
-- [ ] Placeholder asset stash ready on your computer:
-  - 1 dummy PDF (any 1-page PDF will do; the WP admin doesn't care about contents).
-  - 8–10 free icons — recommend [Tabler Icons](https://tabler.io/icons) (SVG, free).
-  - 8–10 placeholder photos — recommend [Unsplash](https://unsplash.com/) "laboratory", "agriculture", "engineering".
-
-#### 5.2 Seed the **Downloads** CPT first *(everything else relates to it)*
-
-Do this six times, once per row in the table below:
-
-1. WP admin → **Downloads** → **Add New**.
-2. Title = the placeholder title from the table.
-3. In the **ACF** box below the title: upload the dummy PDF in the `file` field. Set `version` = `1.0`. Set `date` = today.
-4. In the right sidebar, tick the `Download Category` term and the `Download Type` term from the table.
-5. Leave `associated_product` empty for now (you'll come back to this in step 5.3).
-6. Click **Publish**.
-
-| # | Title | Download Category | Download Type |
-|---|---|---|---|
-| 1 | TS Series Datasheet (placeholder) | Temperature Family | Datasheet |
-| 2 | TS Series Brochure (placeholder) | Temperature Family | Brochure |
-| 3 | TS Series Calibration Certificate (placeholder) | Temperature Family | Certificate |
-| 4 | TS Series User Guide (placeholder) | Temperature Family | User Guide PDF |
-| 5 | TS Series Quick Start (placeholder) | Temperature Family | User Guide PDF |
-| 6 | Software Integration Guide (placeholder) | Temperature Family | Software |
-
-You now have six Download entries that other content can point at.
-
-#### 5.3 Seed the **Product Families** CPT *(one entry — the TS Series)*
-
-1. WP admin → **Product Families** → **Add New**.
-2. Title = `SENSESTICK Temperature`.
-3. In the ACF panel, fill each section with Lorem ipsum + placeholder images:
-   - `overview` — 2–3 sentences of Lorem.
-   - `feature_icons` repeater — click **Add Row** 4 times. For each row pick a Tabler icon + label: `High Accuracy ±0.1°C`, `Real-Time Logging`, `USB Powered`, `Rugged & Reliable`.
-   - `feature_highlights` repeater — 5 rows: `Wide Temperature Range`, `High Resolution`, `Fast Sampling`, `Plug & Play`, `Cross Platform`. Icon + 1-sentence Lorem body each.
-   - `configurations` repeater — 3 rows: `TH-001`, `TH-002`, `TH-003`. Each with placeholder image + 3 bullet specs.
-   - `specifications` repeater — 8–10 rows of `{ key, value }`. Use Lorem like `Operating Range / -40°C to +85°C`.
-   - `downloads_relationship` — search-and-select the 6 Downloads from step 5.2.
-   - `related_resources_relationship` — **leave empty for now**, come back after step 5.4.
-   - `works_with` repeater — 4 rows: `Microsoft Excel`, `Google Sheets`, `LibreOffice Calc`, `Sense Streamer`. Logo + name + `#` link placeholder.
-4. Click **Publish**. The URL will be `yourdomain.com/products/sensestick-temperature/`.
-5. Now go back to **Downloads** → edit each of the 6 Downloads → set `associated_product` = `SENSESTICK Temperature` → Update.
-
-#### 5.4 Seed the **Resources** CPT *(6 placeholder posts)*
-
-Repeat the WP admin → **Resources** → **Add New** flow six times. The `Resource Type` taxonomy box is in the right sidebar — tick exactly one term per post.
-
-| # | Title | Resource Type term | ACF body to fill |
-|---|---|---|---|
-| 1 | Logging Temperature Every Second (placeholder) | Tutorial | `article_body` with 3 blocks: `text`, `numbered_steps` (3 steps), `download_inline` (point at the User Guide download). |
-| 2 | Cold-Chain Monitoring Pilot (placeholder) | Use Case | `article_body` with 2 blocks: `text`, `image_with_caption`. |
-| 3 | TS Series User Guide (placeholder) | User Guide | `article_body` with 4 blocks: `text`, `numbered_section`, `configuration_table`, `callout`. |
-| 4 | Google Sheets Integration | Spreadsheet Integration | Extra fields appear (from `group_spreadsheet_integration`). Fill: `install_steps` (4 rows), `quickstart_steps` (5 rows), `related_docs` (point at the User Guide + Quick Start downloads), `cta_banner_message` = `Ready for Cloud-Based Measurement?`. |
-| 5 | LibreOffice Calc Integration | Spreadsheet Integration | Same fields as #4. `cta_banner_message` = `Ready for Open-Source Measurement?`. |
-| 6 | ONLYOFFICE Spreadsheet Integration | Spreadsheet Integration | Same fields as #4. `cta_banner_message` = `Ready for Open-Source Measurement?`. *(Note: real ONLYOFFICE copy is a follow-up — see 5.7.)* |
-
-For each, set a placeholder Featured Image (top-right of the edit screen) using an Unsplash photo. Click **Publish**.
-
-**Now go back to the Product Family post** (step 5.3) and fill `related_resources_relationship` with posts #3, #1, and #6 (User Guide, Quick Start equivalent, Software Integration equivalent).
-
-#### 5.5 Fill the static **Pages** with ACF
-
-These pages already exist (Phase 2 step 18). You're just editing each one and filling its ACF panel.
-
-**Industries page** *(WP admin → Pages → Industries → Edit)*
-1. ACF panel shows an `industries` repeater. Click **Add Row** 6 times.
-2. Use these 6 rows, in this exact order:
-
-   | Order | Title | featured_on_home | featured_on_about |
-   |---|---|---|---|
-   | 1 | Educational | ✅ | ✅ |
-   | 2 | Laboratories | — | ✅ |
-   | 3 | Agriculture | ✅ | ✅ |
-   | 4 | Environmental Monitoring | ✅ | ✅ |
-   | 5 | Smart Buildings | — | — |
-   | 6 | Engineering Analysis | ✅ | ✅ |
-
-   *(Result: Home gets 5 cards, About gets 5 cards, Industries page gets all 6 — matches Figma.)*
-
-3. Each row: Tabler icon + 1-line Lorem body + `learn_more_link` = `#` placeholder.
-4. **Update**.
-
-**Downloads page** *(WP admin → Pages → Downloads → Edit)*
-1. ACF panel shows `download_groups` Flexible Content.
-2. Click **Add Row → Group** seven times. Use the Figma category order:
-   - Temperature Measurement Family
-   - Microsoft Excel
-   - Google Sheets
-   - LibreOffice Calc
-   - ONLYOFFICE Spreadsheet
-   - Tutorials
-   - Use Cases
-3. In each group, add the relevant Downloads from step 5.2 into the items repeater. For the first group ("Temperature Measurement Family") add all 6; the other groups can have 0 items for now (you'll seed real ones later).
-4. **Update**.
-
-**Home / About / Getting Started / Contact / Book a Demo** — these are built in Elementor (Phase 4 work), not ACF. Skip them in Phase 5 — Phase 4 already wired them to their data sources.
-
-#### 5.6 Build the **Primary menu**
-
-1. WP admin → **Appearance** → **Menus** → **Create a new menu**, name it `Primary`.
-2. Add menu items in this exact order (use Pages, Custom Links, or Post Types from the left side):
-   - **Home** — Pages → Home
-   - **Getting Started** — Pages → Getting Started
-     - └─ **Microsoft Excel** — Custom Link, URL = `#` (placeholder; client will supply real URL later)
-     - └─ **Google Sheets** — Resources → "Google Sheets Integration"
-     - └─ **LibreOffice Calc** — Resources → "LibreOffice Calc Integration"
-     - └─ **ONLYOFFICE Spreadsheet** — Resources → "ONLYOFFICE Spreadsheet Integration"
-   - **Products** — Product Families → "SENSESTICK Temperature"
-   - **Resources** — Custom Link, URL = `#` (dropdown only, never clicked)
-     - └─ **Tutorials** — Custom Link, URL = `/resource_type/tutorial/`
-     - └─ **Use Case** — Custom Link, URL = `/resource_type/use-case/`
-     - └─ **Industries** — Pages → Industries
-     - └─ **Downloads** — Pages → Downloads
-   - **About** — Pages → About
-   - **Contact** — Pages → Contact Us
-3. To nest items: drag a menu item slightly to the right under its parent. The label changes to `sub item`.
-4. Scroll down → **Display location** → tick `Primary` (or whatever your theme calls the header location) → **Save Menu**.
-5. Open the site front-end and confirm: every nav item resolves to a real page, no 404s, dropdowns appear on hover.
-
-#### 5.7 Exit criteria for Phase 5
-
-You can mark Phase 5 complete when ALL of the following are true:
-
-- [ ] **Downloads** CPT has 6 published posts (5.2).
-- [ ] **Product Families** CPT has 1 published post, with downloads + related resources linked (5.3).
-- [ ] **Resources** CPT has 6 published posts spanning 4 taxonomy terms (5.4).
-- [ ] **Industries** page ACF has 6 rows with featured flags as specified (5.5).
-- [ ] **Downloads** page ACF has 7 groups, "Temperature Measurement Family" populated (5.5).
-- [ ] **Primary menu** assigned, renders the full Figma IA, no 404s when clicking through (5.6).
-
-#### 5.8 Deferred to a later content-swap pass (NOT a Phase 5 blocker)
-
-- Replace Lorem with the real TS Series datasheet copy when client signs off.
-- Replace placeholder PDFs with real Datasheet / Brochure / Certificate / User Guide / Quick Start / Software Integration PDFs.
-- Replace Unsplash images with client-supplied product + industry photography.
-- ONLYOFFICE Spreadsheet Integration copy — Figma frame currently mis-references LibreOffice/Excel. Author distinct ONLYOFFICE copy.
-- Footer tagline (Lorem in Figma) — request from client.
-- Footer contact number `+44 123-456-7890` + San Francisco address — confirm correct values with client.
+- **TS Series Product Family** — full population from datasheet (hero, feature icons, 5 highlights, 3 configurations, spec table, legal notice, downloads relationships, related resources).
+- **Industries** — 6 cards with icons + copy (canonical 6: Educational, Laboratories, Agriculture, Environmental Monitoring, Smart Buildings, Engineering Analysis).
+- **About** — philosophy quote, 5 work-step cards, 5 reused industry cards, vision copy.
+- **Getting Started** — 4 quickstart card copy + 3–4 integration cards.
+- **At least one of each Resource**: 1 Tutorial (full article with figures, steps, callouts), 1 Use Case, 1 User Guide, 3 Spreadsheet Integrations (Sheets, Calc, ONLYOFFICE).
+- **Downloads** — real PDFs per category: Datasheet, Brochure, Certificate of Calibration, User Guide, Quick Start, Software Integration.
+- **Copy fixes flagged on ONLYOFFICE Figma frame**: subtitle currently says "LibreOffice Calc"; documentation intro says "Excel"; CTA banner reuses LibreOffice copy. Author distinct ONLYOFFICE copy.
+- **Footer tagline placeholder** (Lorem ipsum in Figma) — request real tagline from client.
+- **Footer contact number** `+44 123-456-7890` paired with a San Francisco address — confirm correct values with client.
 
 ### Phase 6 — QA + handoff
 
